@@ -1,0 +1,36 @@
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+{% endif %}
+
+{% endwith %}
+
+<form action="/new" method="POST">
+    <input type="text" name="fullname" placeholder="write your fullname">
+    <input type="text" name="email" placeholder="write your email">
+    <input type="text" name="cell" placeholder="write your phone number">
+    <button>Save</button>
+</form>
+<script>
+    function alert_delete(){
+        return confirm("Are you sure you want to delete this contact?");
+    }
+</script>
+<div>
+    {% for contact in all_contacts %}
+    <div>
+        <h5>{{ contact.fullname }}</h5>
+        <div>
+            <!--i need to navigate inside contacts_rouete and find the delete function -->
+            <!-- delete and update contact need a one argument "id"-->
+            <a href="{{ url_for('contacts.update_contact', id=contact.id) }}">UPDATE</a>
+            <a href="{{ url_for('contacts.delete_contact', id=contact.id) }}" onclick="return alert_delete()" >DELETE</a>
+        </div>
+        <p>{{ contact.email }}</p>
+        <p>{{ contact.cell }}</p>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+<div class="row">
+
+    <div class="col-md-5">
+        {% include 'partials/_messages.html' %}
+        {% include 'partials/_contact_from.html' %}
+    </div>
+
+    <div class="col-md-7" >
+        <script>
+            function alert_delete(){
+                return confirm("Are you sure you want to delete this contact?");
+            }
+        </script>
+
+        {% for contact in all_contacts %}
+        <div class="card mb-1 text-white bg-dark">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5>{{ contact.fullname }}</h5>
+                    <div>
+                        <!--i need to navigate inside contacts_rouete and find the delete function -->
+                        <!-- delete and update contact need a one argument "id"-->
+                        <a href="{{ url_for('contacts.update_contact', id=contact.id) }}" class="btn bg-black
+                        text-white btn-sm rounded-0">UPDATE</a>
+                        <a href="{{ url_for('contacts.delete_contact', id=contact.id) }}"class="btn btn-danger
+                        btn-sm rounded-0" onclick="return alert_delete()" >DELETE</a>
+                    </div>
+                </div>
+                <p>{{ contact.email }}</p>
+                <p>{{ contact.cell }}</p>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
